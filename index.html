@@ -1,6 +1,150 @@
 <!DOCTYPE html>
 <html lang="zh">
+<head><!DOCTYPE html>
+<html lang="zh">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>老吕横眉的个人网站</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* 弹窗样式 */
+        #popup-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #007BFF, white);
+            color: #333;
+            padding: 20px;
+            z-index: 1000;
+            display: none; /* 初始隐藏 */
+            overflow-y: auto; /* 启用滚动 */
+        }
+
+        #popup-bar .content {
+            padding: 20px;
+            font-size: 18px;
+            height: 80%; /* 确保文本可以滚动 */
+            overflow-y: auto;
+        }
+
+        #popup-bar .button-container {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #popup-bar .button-container a {
+            background-color: #f9a825;
+            padding: 15px 30px;
+            color: #fff;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: not-allowed; /* 默认不可点击 */
+            pointer-events: none; /* 禁止点击 */
+            transition: background-color 0.3s;
+        }
+
+        #popup-bar .button-container a.enabled {
+            cursor: pointer;
+            pointer-events: auto;
+            background-color: #d07f00; /* 启用后按钮颜色 */
+        }
+
+        /* 页面内容样式 */
+        .content {
+            text-align: center;
+            padding: 50px;
+            color: #333;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+    </style>
+    <script>
+        let scrollHeight = 0;
+        let scrollThreshold = 0;
+
+        window.onload = function() {
+            const popup = document.getElementById("popup-bar");
+            const button = document.getElementById("popup-button");
+            const content = document.getElementById("popup-content");
+
+            // 显示弹窗
+            popup.style.display = "block";
+
+            // 计算需要滚动的高度
+            scrollHeight = content.scrollHeight;
+            scrollThreshold = scrollHeight - window.innerHeight;
+
+            // 监听滚动事件
+            content.onscroll = function() {
+                // 检查是否滚动到达底部
+                if (content.scrollTop >= scrollThreshold) {
+                    // 倒计时 5 秒
+                    startCountdown(button);
+                }
+            };
+        };
+
+        function startCountdown(button) {
+            let countdown = 5;
+            const countdownDisplay = document.getElementById("countdown-display");
+            
+            // 显示倒计时
+            let countdownInterval = setInterval(function() {
+                countdownDisplay.innerText = `倒计时：${countdown}秒`;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    button.classList.add("enabled"); // 启用按钮
+                    button.style.cursor = "pointer"; // 改变为可点击
+                    button.style.pointerEvents = "auto"; // 允许点击
+                }
+            }, 1000);
+        }
+
+        function closePopup() {
+            const popup = document.getElementById("popup-bar");
+            popup.style.display = "none";
+        }
+    </script>
+</head>
+<body>
+
+    <!-- 页面内容 -->
+    <div class="content">
+        <h2>横眉冷对，直言不讳</h2>
+        <p>继续滚动页面并等待弹窗底部按钮启用...</p>
+    </div>
+
+    <!-- 弹窗 -->
+    <div id="popup-bar">
+        <div class="content" id="popup-content">
+            <h2>欢迎来到老吕横眉的个人网站！</h2>
+            <p>这里是一些介绍文字，用户需要滚动查看这些内容，直到到达底部。</p>
+            <p>继续向下滚动并等待按钮启用，点击按钮继续操作。</p>
+        </div>
+        <div class="button-container">
+            <p id="countdown-display">倒计时：5秒</p>
+            <a href="https://your-coffee-page.com" id="popup-button" class="disabled" target="_blank" onclick="closePopup()">请老吕喝咖啡</a>
+        </div>
+    </div>
+
+</body>
+</html>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>老吕横眉的个人网站</title>
